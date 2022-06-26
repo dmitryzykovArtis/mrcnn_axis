@@ -1236,7 +1236,7 @@ def load_image_gt(dataset, config, image_id, augment=False, augmentation=None,
         # Some, such as Affine, have settings that make them unsafe, so always
         # test your augmentation on masks
         MASK_AUGMENTERS = ["Sequential", "SomeOf", "OneOf", "Sometimes",
-                           "Fliplr", "Flipud", "CropAndPad",
+                           "Fliplr", "Flipud", "CropAndPad", "CropToFixedSize"
                            "Affine", "PiecewiseAffine"]
 
         def hook(images, augmenter, parents, default):
@@ -2071,6 +2071,7 @@ class MaskRCNN():
         """
         # Get directory names. Each directory corresponds to a model
         dir_names = next(os.walk(self.model_dir))[1]
+
         key = self.config.NAME.lower()
         dir_names = filter(lambda f: f.startswith(key), dir_names)
         dir_names = sorted(dir_names)
